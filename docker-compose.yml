@@ -31,15 +31,15 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: homestead
-      MYSQL_USER: homestead
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: bookme
+      MYSQL_USER: bookme
+      MYSQL_PASSWORD: B00k@Me
+      MYSQL_ROOT_PASSWORD: Root@1234
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:
       - laravel
-
+      
   php:
     build:
       context: ./dockerfiles
@@ -53,6 +53,15 @@ services:
       - ./src:/var/www/html:delegated
     networks:
       - laravel
+      
+  phpmyadmin_master:
+    restart: always
+    image: phpmyadmin/phpmyadmin:5.1.1
+    ports:
+    - 8088:80
+    environment:
+      PMA_HOSTS: mysql
+
 
   redis:
     image: redis:alpine
